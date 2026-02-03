@@ -49,7 +49,6 @@ The platform offers **customizable practice interviews**, **resume-based questio
 
 ![alt text](screenshots/Screenshot_10-9-2025_20713_interview-ai-pual.onrender.com.jpeg)
 
-![alt text](screenshots/Screenshot_10-9-2025_20449_interview-ai-pual.onrender.com.jpeg)
 
 ### 3. **Interview Page**
 
@@ -58,7 +57,6 @@ The platform offers **customizable practice interviews**, **resume-based questio
 - Opens **Result Page** after completion.
 
 ![alt text](screenshots/Screenshot_10-9-2025_20524_interview-ai-pual.onrender.com.jpeg)
-![alt text](screenshots/Screenshot_10-9-2025_201017_interview-ai-pual.onrender.com.jpeg)
 
 ### 4. **Interview Result Page**
 

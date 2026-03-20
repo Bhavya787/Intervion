@@ -101,7 +101,7 @@ const Register = () => {
 
       toast({
         title: "Registration Successful",
-        description: `Welcome to InterviewPro! Setting up your ${role} account...`,
+        description: `Welcome to Intervion! Setting up your ${role} account...`,
       });
 
       navigate(
@@ -126,11 +126,11 @@ const Register = () => {
       <div className="w-full max-w-2xl space-y-6">
         {/* Logo */}
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-500 dark:bg-indigo-700 shadow-lg mb-4">
-            <span className="text-white font-bold text-2xl">IP</span>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 shadow-lg mb-4">
+            <span className="text-white font-bold text-2xl">IV</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Join InterviewPro
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+            Join Intervion
           </h1>
           <p className="text-gray-500 dark:text-gray-400">
             Create your account and start your journey

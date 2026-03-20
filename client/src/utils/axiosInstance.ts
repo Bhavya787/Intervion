@@ -1,9 +1,12 @@
 import axios from "axios";
 
+const baseURL =
+  import.meta.env.VITE_API_URL ||
+  "https://interview-ai-backend-jpck.onrender.com/api";
+
 const axiosInstance = axios.create({
-  baseURL: "https://interview-ai-backend-jpck.onrender.com/api",
-  withCredentials: true, // if you need cookies
+  baseURL,
+  withCredentials: true,
 });
 
-// You can add interceptors here if needed
 export default axiosInstance;

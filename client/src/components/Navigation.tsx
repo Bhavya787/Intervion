@@ -16,6 +16,7 @@ import {
   ClipboardList,
   LogIn,
   UserPlus,
+  Users,
 } from "lucide-react";
 
 const Navigation = () => {
@@ -56,6 +57,7 @@ const Navigation = () => {
   const studentNavItems = [
     { name: "Dashboard", path: "/student/dashboard", icon: Home },
     { name: "Practice Interview", path: "/student/practice", icon: User },
+    { name: "Study Rooms", path: "/student/rooms", icon: Users },
     { name: "Explore Jobs", path: "/student/jobs", icon: Building },
     {
       name: "Applications",
@@ -90,11 +92,11 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-700 dark:to-purple-700 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">IP</span>
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-sm">IV</span>
             </div>
-            <span className="font-bold text-xl text-indigo-700 dark:text-indigo-300">
-              InterviewPro
+            <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+              Intervion
             </span>
           </Link>
 

@@ -23,6 +23,10 @@ import CompanyJobApplicationsPage from "./pages/company/CompanyJobApplicationsPa
 import ApplicationDetailPage from "./pages/company/ApplicationDetailPage";
 import StudentApplicationsPage from "./pages/student/StudentApplicationsPage";
 import StudentApplicationDetailPage from "./pages/student/StudentApplicationDetailPage";
+import StudyRoomsPage from "./pages/student/StudyRoomsPage";
+import RoomDetailPage from "./pages/student/RoomDetailPage";
+import MCQPractice from "./pages/student/MCQPractice";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // inside <Routes>
 
@@ -40,33 +44,133 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/student/dashboard" element={<StudentDashboard />} />
-              <Route path="/student/practice" element={<StudentPractice />} />
-              <Route path="/company/dashboard" element={<CompanyDashboard />} />
+              <Route
+                path="/student/dashboard"
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <StudentDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/student/practice"
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <StudentPractice />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/company/dashboard"
+                element={
+                  <ProtectedRoute allowedRoles={["company"]}>
+                    <CompanyDashboard />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/student/practice-result"
-                element={<PracticeResultPage />}
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <PracticeResultPage />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/company/job/new" element={<CompanyJobForm />} />
-              <Route path="/student/jobs" element={<StudentJobsPage />} />
-              <Route path="/student/profile" element={<StudentProfile />} />
-              <Route path="/student/jobs/:id" element={<JobDetailPage />} />
-              <Route path="/company/jobs" element={<CompanyJobsPage />} />
+              <Route
+                path="/company/job/new"
+                element={
+                  <ProtectedRoute allowedRoles={["company"]}>
+                    <CompanyJobForm />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/student/jobs"
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <StudentJobsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/student/profile"
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <StudentProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/student/rooms"
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <StudyRoomsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/student/mcq"
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <MCQPractice />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/student/rooms/:id"
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <RoomDetailPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/student/jobs/:id"
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <JobDetailPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/company/jobs"
+                element={
+                  <ProtectedRoute allowedRoles={["company"]}>
+                    <CompanyJobsPage />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/company/job/:id"
-                element={<CompanyJobApplicationsPage />}
+                element={
+                  <ProtectedRoute allowedRoles={["company"]}>
+                    <CompanyJobApplicationsPage />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/company/job/:jobId/:applicationId"
-                element={<ApplicationDetailPage />}
+                element={
+                  <ProtectedRoute allowedRoles={["company"]}>
+                    <ApplicationDetailPage />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/student/applications"
-                element={<StudentApplicationsPage />}
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <StudentApplicationsPage />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/student/application/:id"
-                element={<StudentApplicationDetailPage />}
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <StudentApplicationDetailPage />
+                  </ProtectedRoute>
+                }
               />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

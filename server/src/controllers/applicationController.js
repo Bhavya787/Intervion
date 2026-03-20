@@ -2,6 +2,7 @@
 import express from "express";
 import Application from "../models/Application.js";
 import User from "../models/User.js";
+import Interview from "../models/Interview.js";
 
 const router = express.Router();
 
@@ -129,6 +130,58 @@ export const updateApplicationStatus = async (req, res) => {
     res.json({ message: "Status updated successfully", application });
   } catch (error) {
     console.error("Error updating status:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// ✅ Schedule an interview for an application
+export const scheduleApplicationInterview = async (req, res) => {
+  try {
+    const { applicationId } = req.params;
+    const { scheduledAt, meetingLink, duration } = req.body;
+
+    if (!scheduledAt) {
+      return res.status(400).json({ message: "Schedule date is required" });
+    }
+
+    const application = await Application.findById(applicationId)
+      .populate("candidateId")
+      .populate("jobId");
+
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
+    // Set application schedule
+    application.scheduledAt = new Date(scheduledAt);
+    if (application.status === "applied") {
+       application.status = "in-progress";
+    }
+    await application.save();
+
+    // Sync to Interview model for Student Dashboard
+    const companyUser = await User.findById(req.user.id);
+    const studentUser = application.candidateId;
+    const job = application.jobId;
+
+    let interview = await Interview.findOne({ application: applicationId });
+    if (!interview) {
+      interview = new Interview({
+        user: studentUser._id,
+        company: req.user.id,
+        job: job._id,
+        application: application._id,
+        status: "scheduled",
+        type: "company", // this matches the expected "company" type in StudentDashboard
+      });
+    }
+    interview.scheduledAt = new Date(scheduledAt);
+    if (meetingLink) interview.meetingLink = meetingLink;
+    await interview.save();
+
+    res.json({ message: "Interview scheduled successfully.", application, interview });
+  } catch (error) {
+    console.error("Error scheduling interview:", error);
     res.status(500).json({ message: "Server error" });
   }
 };

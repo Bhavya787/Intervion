@@ -6,6 +6,8 @@ import {
   concludeInterview,
   getUserInterviews,
   getInterviewById,
+  rescheduleInterview,
+  scheduleInterview,
 } from "../controllers/interviewController.js";
 import { generateGeminiResponse } from "../utils/gemini.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
@@ -30,5 +32,9 @@ router.post("/conclude", authMiddleware(), concludeInterview);
 router.get("/mine", authMiddleware(), getUserInterviews);
 // ✅ Fetch one interview by ID (for detailed results page)
 router.get("/:id", authMiddleware(), getInterviewById);
+// ✅ Reschedule an interview
+router.patch("/:id/reschedule", authMiddleware(), rescheduleInterview);
+// ✅ Schedule a real interview (Company -> Student)
+router.post("/schedule", authMiddleware(), scheduleInterview);
 
 export default router;

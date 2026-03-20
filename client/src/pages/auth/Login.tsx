@@ -59,7 +59,7 @@ const Login = () => {
 
       toast({
         title: "Login Successful",
-        description: `Welcome back! Redirecting to your ${res.data.role} dashboard...`,
+        description: "Welcome back to Intervion!",
       });
 
       // Save token in localStorage (optional)
@@ -103,11 +103,11 @@ const Login = () => {
       <div className="w-full max-w-md space-y-6">
         {/* Logo */}
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-500 dark:bg-indigo-700 shadow-lg mb-4">
-            <span className="text-white font-bold text-2xl">IP</span>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 shadow-lg mb-4">
+            <span className="text-white font-bold text-2xl">IV</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            InterviewPro
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+            Intervion
           </h1>
           <p className="text-gray-500 dark:text-gray-400">
             Sign in to your account

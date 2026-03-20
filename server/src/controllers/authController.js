@@ -19,12 +19,26 @@ export const register = async (req, res) => {
       role,
       email,
       password: hashedPassword,
-      ...rest, // includes fullName, educationalBackground, skills OR companyName, etc.
+      ...rest,
     });
-    if (role == "student") {
+    if (role === "student") {
       user.fullName = rest.name;
+      // Convert skills string to array if it's a string
+      if (rest.skills && typeof rest.skills === "string") {
+        user.skills = rest.skills
+          .split(",")
+          .map((s) => s.trim())
+          .filter((s) => s !== "");
+      }
     } else {
       user.companyName = rest.name;
+      // Convert roleOffered string to array if it's a string
+      if (rest.roleOffered && typeof rest.roleOffered === "string") {
+        user.roleOffered = rest.roleOffered
+          .split(",")
+          .map((s) => s.trim())
+          .filter((s) => s !== "");
+      }
     }
     await user.save();
 

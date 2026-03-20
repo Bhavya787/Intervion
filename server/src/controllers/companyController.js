@@ -27,19 +27,29 @@ export const getCompanyDashboard = async (req, res) => {
       rejected: applications.filter((a) => a.status === "rejected").length,
     };
 
-    // 4. Recent Applications (latest 5)
+    // 4. Fetch upcoming interviews (scheduled applications)
+    const upcomingInterviews = await Application.find({
+      jobId: { $in: jobIds },
+      scheduledAt: { $exists: true, $ne: null },
+    })
+      .populate("candidateId", "fullName email")
+      .populate("jobId", "title")
+      .sort({ scheduledAt: 1 });
+
+    // 5. Recent Applications (latest 5)
     const recentApplications = await Application.find({
       jobId: { $in: jobIds },
     })
       .sort({ createdAt: -1 })
       .limit(5)
-      .populate("candidateId", "name email")
+      .populate("candidateId", "fullName email")
       .populate("jobId", "title");
 
     res.json({
       stats,
       jobs,
       recentApplications,
+      upcomingInterviews,
     });
   } catch (err) {
     console.error("Dashboard fetch error:", err);

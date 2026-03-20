@@ -1,5 +1,7 @@
 import { generateGeminiResponse } from "../utils/gemini.js";
 import Interview from "../models/Interview.js";
+import User from "../models/User.js";
+import JobOpening from "../models/JobOpening.js";
 
 export const startInterview = async (req, res) => {
   const { role, resume, roundType, topic, difficulty } = req.body;
@@ -238,12 +240,46 @@ Do NOT add any explanation after Result line.
   });
 };
 
+// ✅ Reschedule an interview
+export const rescheduleInterview = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { scheduledAt } = req.body;
+    const userId = req.user.id;
+
+    if (!scheduledAt) {
+      return res.status(400).json({ error: "New schedule date is required" });
+    }
+
+    const interview = await Interview.findOneAndUpdate(
+      { _id: id, user: userId },
+      { scheduledAt: new Date(scheduledAt) },
+      { new: true }
+    );
+
+    if (!interview) {
+      return res.status(404).json({ error: "Interview not found" });
+    }
+
+    res.json({ message: "Interview rescheduled successfully", interview });
+  } catch (err) {
+    console.error("Error rescheduling interview:", err);
+    res.status(500).json({ error: "Server error while rescheduling interview" });
+  }
+};
+
 // ✅ Get all interviews of the logged-in user
 export const getUserInterviews = async (req, res) => {
   try {
     const userId = req.user.id; // from JWT
     console.log("Fetching interviews for user:", userId);
-    const interviews = await Interview.find({ user: userId }).sort({
+    const interviews = await Interview.find({ 
+      $or: [{ user: userId }, { company: userId }] 
+    })
+    .populate("company", "fullName companyName email")
+    .populate("job", "title")
+    .populate("user", "fullName email") // the student candidate
+    .sort({
       createdAt: -1,
     });
     res.json(interviews);
@@ -268,5 +304,43 @@ export const getInterviewById = async (req, res) => {
   } catch (err) {
     console.error("Error fetching interview by ID:", err);
     res.status(500).json({ error: "Server error while fetching interview" });
+  }
+};
+
+// ✅ Schedule an interview (Company -> Student)
+export const scheduleInterview = async (req, res) => {
+  try {
+    const { studentId, jobId, scheduledAt, meetingLink, duration } = req.body;
+    const companyId = req.user.id; // From authMiddleware
+
+    if (!studentId || !jobId || !scheduledAt) {
+      return res.status(400).json({ error: "studentId, jobId, and scheduledAt are required." });
+    }
+
+    const companyUser = await User.findById(companyId);
+    const studentUser = await User.findById(studentId);
+    const job = await JobOpening.findById(jobId);
+
+    if (!companyUser || !studentUser || !job) {
+      return res.status(404).json({ error: "Company, Student, or Job not found." });
+    }
+
+    // 1. Create the Interview DB Record
+    const interview = new Interview({
+      user: studentId, // Candidate
+      company: companyId,
+      job: jobId,
+      scheduledAt: new Date(scheduledAt),
+      meetingLink: meetingLink || "",
+      status: "scheduled",
+      type: "real", // real interview
+    });
+
+    await interview.save();
+
+    res.json({ message: "Interview scheduled successfully.", interview });
+  } catch (err) {
+    console.error("Error scheduling interview:", err);
+    res.status(500).json({ error: "Server error while scheduling interview" });
   }
 };

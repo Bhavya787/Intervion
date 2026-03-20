@@ -8,6 +8,7 @@ import {
   getJobApplications,
   getApplicationById,
   updateApplicationStatus,
+  scheduleApplicationInterview,
   addRoundResult,
 } from "../controllers/applicationController.js";
 
@@ -36,6 +37,13 @@ router.patch(
   "/:applicationId",
   authMiddleware("company"),
   updateApplicationStatus
+);
+
+// ✅ Schedule interview for application
+router.patch(
+  "/:applicationId/schedule",
+  authMiddleware("company"),
+  scheduleApplicationInterview
 );
 
 export default router;

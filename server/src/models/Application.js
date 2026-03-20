@@ -33,6 +33,7 @@ const applicationSchema = new mongoose.Schema(
       default: "applied",
     },
     history: [historySchema],
+    scheduledAt: Date,
   },
   { timestamps: true }
 );

@@ -12,7 +12,17 @@ const InterviewSchema = new Schema(
     roleSummary: String,
     roundType: String,
     customTopic: String,
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    scheduledAt: Date,
+    status: { type: String, enum: ["scheduled", "completed", "cancelled"], default: "scheduled" },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true }, // Candidate (Student)
+    
+    // Fields for real Company-Student interviews
+    company: { type: Schema.Types.ObjectId, ref: "User" },
+    job: { type: Schema.Types.ObjectId, ref: "JobOpening" },
+    application: { type: Schema.Types.ObjectId, ref: "Application" },
+    companyIcsUrl: String,
+    studentIcsUrl: String,
+    meetingLink: String,
   },
   { timestamps: true }
 );

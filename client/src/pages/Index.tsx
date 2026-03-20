@@ -51,23 +51,23 @@ const Index = () => {
 
   const testimonials = [
     {
-      name: 'Sarah Johnson',
-      role: 'Software Engineer at TechCorp',
-      content: 'InterviewPro helped me land my dream job! The AI feedback was incredibly accurate and helped me improve my technical communication.',
-      rating: 5,
-    },
-    {
-      name: 'Mike Chen',
-      role: 'Product Manager at StartupX',
-      content: 'The practice sessions felt so real. I went into my actual interviews feeling confident and prepared.',
-      rating: 5,
-    },
-    {
-      name: 'Emily Davis',
-      role: 'HR Director at CloudTech',
-      content: 'As a company, InterviewPro streamlined our hiring process and helped us find better candidates faster.',
-      rating: 5,
-    },
+        name: 'Sarah Johnson',
+        role: 'Software Engineer at TechCorp',
+        content: 'Intervion helped me land my dream job! The AI feedback was incredibly accurate and helped me improve my technical communication.',
+        rating: 5,
+      },
+      {
+        name: 'Mike Chen',
+        role: 'Product Manager at StartupX',
+        content: 'The practice sessions felt so real. I went into my actual interviews feeling confident and prepared.',
+        rating: 5,
+      },
+      {
+        name: 'Emily Davis',
+        role: 'HR Director at CloudTech',
+        content: 'As a company, Intervion streamlined our hiring process and helped us find better candidates faster.',
+        rating: 5,
+      },
   ];
 
   return (
@@ -76,12 +76,12 @@ const Index = () => {
       <nav className="bg-white dark:bg-[#181A2A] border-b border-gray-200 dark:border-gray-700 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-700 dark:to-purple-700 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">IP</span>
-              </div>
-              <span className="font-bold text-xl text-indigo-700 dark:text-indigo-300">InterviewPro</span>
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-sm">IV</span>
             </div>
+            <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Intervion</span>
+          </div>
             <div className="flex items-center space-x-4">
               <Link to="/login">
                 <Button variant="ghost" className="text-indigo-500 dark:text-indigo-400">Sign In</Button>

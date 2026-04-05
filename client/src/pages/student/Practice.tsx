@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import PracticeSetup from "@/components/practice/PracticeSetup";
 import PracticeInterview from "@/components/practice/PracticeInterview";
@@ -9,6 +9,8 @@ import PracticeResults from "@/components/practice/PracticeResults";
 
 type Step = "setup" | "interview" | "results";
 
+const pageShell = "min-h-screen bg-slate-50 dark:bg-[#0f172a]";
+
 const Practice = () => {
   const [currentStep, setCurrentStep] = useState<Step>("setup");
   const [setupData, setSetupData] = useState({
@@ -18,13 +20,15 @@ const Practice = () => {
     roundType: "",
     topic: "",
   });
-  const [interviewResults, setInterviewResults] = useState({});
+  const [interviewResults, setInterviewResults] = useState<Record<
+    string,
+    unknown
+  > | null>(null);
 
-  // Interview state
   const [interviewState, setInterviewState] = useState({
     currentQuestion: 1,
     totalQuestions: 5,
-    timeRemaining: 1800, // 30 minutes
+    timeRemaining: 1800,
     isRecording: false,
     isCameraOn: true,
     isMicOn: false,
@@ -40,13 +44,7 @@ const Practice = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // assuming you have set up axios baseURL in axios instance
-  // example:
-  // const api = axios.create({ baseURL: "http://localhost:5000/api" });
-
   const handleSetupSubmit = async () => {
-    console.log(setupData);
-
     if (
       !setupData.role ||
       !setupData.difficulty ||
@@ -62,22 +60,18 @@ const Practice = () => {
     }
 
     try {
-      // Call backend with metadata
       const res = await axiosInstance.post("/interview/start", {
         role: setupData.role,
-        resume: setupData.resume, // probably base64 or file id
+        resume: setupData.resume,
         roundType: setupData.roundType,
         topic: setupData.topic,
         difficulty: setupData.difficulty,
       });
 
-      // Response from backend (assuming it returns { question: "..." })
       const firstQuestion = res.data.message;
 
-      // Move to interview screen
       setCurrentStep("interview");
 
-      // Update interview state with question and chat history
       setInterviewState((prev) => ({
         ...prev,
         question: firstQuestion,
@@ -89,11 +83,20 @@ const Practice = () => {
           },
         ],
       }));
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error starting interview:", error);
+      const ax = error as {
+        response?: { status?: number; data?: { error?: string } };
+      };
+      const msg =
+        ax.response?.data?.error ||
+        (ax.response?.status === 429
+          ? "Too many requests. Wait a minute and try again."
+          : undefined);
       toast({
-        title: "Error",
-        description: "Failed to start interview. Please try again.",
+        title: ax.response?.status === 429 ? "AI rate limit" : "Error",
+        description:
+          msg || "Failed to start interview. Please try again in a moment.",
         variant: "destructive",
       });
     }
@@ -109,7 +112,6 @@ const Practice = () => {
       return;
     }
 
-    // Add current answer to chat history
     const updatedChatHistory = [
       ...interviewState.chatHistory,
       {
@@ -120,13 +122,7 @@ const Practice = () => {
     ];
 
     try {
-      // ✅ Check if last question
       if (interviewState.currentQuestion >= interviewState.totalQuestions) {
-        // 🎯 Interview conclude
-        console.log(
-          "Interview concluded. Fetching results..." +
-            localStorage.getItem("token")
-        );
         const res = await axiosInstance.post(
           "/interview/conclude",
           {
@@ -136,7 +132,7 @@ const Practice = () => {
             roundType: setupData.roundType,
             customTopic: setupData.topic,
             difficulty: setupData.difficulty,
-            typeOfInterview: "practice", // or "company"
+            typeOfInterview: "practice",
           },
           {
             headers: {
@@ -144,17 +140,11 @@ const Practice = () => {
             },
           }
         );
-        console.log("Interview results:", res.data);
         const { interview } = res.data;
 
-        // Go to results screen
-        setInterviewResults(interview);
+        setInterviewResults(interview as Record<string, unknown>);
         setCurrentStep("results");
-
-        // Optionally store results somewhere (context / state)
-        // console.log("Interview Results:", { finalFeedback, result, feedbacks });
       } else {
-        // 🎯 Normal flow → get next question
         const res = await axiosInstance.post("/interview/respond", {
           chatHistory: updatedChatHistory,
           answer: interviewState.answer,
@@ -165,9 +155,8 @@ const Practice = () => {
           difficulty: setupData.difficulty,
         });
 
-        const nextQuestion = res.data.message; // assume backend returns { message: "..." }
+        const nextQuestion = res.data.message;
 
-        // Append next question to history
         updatedChatHistory.push({
           type: "question",
           content: nextQuestion,
@@ -182,7 +171,7 @@ const Practice = () => {
           answer: "",
         }));
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error in interview flow:", error);
       toast({
         title: "Error",
@@ -198,15 +187,9 @@ const Practice = () => {
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  // const getScoreColor = (score: number) => {
-  //   if (score >= 85) return "text-green-500 dark:text-green-400";
-  //   if (score >= 70) return "text-yellow-500 dark:text-yellow-400";
-  //   return "text-red-500 dark:text-red-400";
-  // };
-
   if (currentStep === "setup") {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#101322]">
+      <div className={pageShell}>
         <Navigation />
         <PracticeSetup
           setupData={setupData}
@@ -220,8 +203,7 @@ const Practice = () => {
 
   if (currentStep === "interview") {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#101322]">
-        {/* <Navigation /> */}
+      <div className={pageShell}>
         <PracticeInterview
           setupData={setupData}
           interviewState={interviewState}
@@ -233,29 +215,17 @@ const Practice = () => {
       </div>
     );
   }
-  if (currentStep === "results") {
-    return (
-      <div className="min-h-screen bg-white dark:bg-[#101322]">
-        <Navigation />
-        <PracticeResults interview={interviewResults} navigate={navigate} />
-      </div>
-    );
-  }
-
-  useEffect(() => {
-    console.log(setupData);
-  }, [setupData]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#101322]">
+    <div className={pageShell}>
       <Navigation />
-      <PracticeSetup
-        setupData={setupData}
-        setSetupData={setSetupData}
-        handleSetupSubmit={handleSetupSubmit}
-        navigate={navigate}
-        toast={toast}
-      />
+      {interviewResults ? (
+        <PracticeResults interview={interviewResults} navigate={navigate} />
+      ) : (
+        <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center">
+          <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600" />
+        </div>
+      )}
     </div>
   );
 };

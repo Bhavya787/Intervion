@@ -49,6 +49,11 @@ export const setupSocket = (server) => {
       socket.to(roomId).emit("code-update", { code, language });
     });
 
+    socket.on("code-session-update", ({ roomId, session }) => {
+      console.log(`[Socket] Code session update in ${roomId} from ${socket.id}`);
+      socket.to(roomId).emit("code-session-update", session);
+    });
+
     // Cursor position updates
     socket.on("cursor-update", ({ roomId, userId, userName, position }) => {
       socket.to(roomId).emit("cursor-update", { userId, userName, position });

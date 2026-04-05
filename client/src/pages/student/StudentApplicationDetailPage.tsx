@@ -74,10 +74,15 @@ const ApplicationDetail = () => {
       }));
 
       setCurrentStep("interview");
-    } catch (err) {
+    } catch (err: unknown) {
+      const ax = err as {
+        response?: { status?: number; data?: { error?: string } };
+      };
+      const msg = ax.response?.data?.error;
       toast({
-        title: "Error",
-        description: "Failed to start interview",
+        title: ax.response?.status === 429 ? "AI rate limit" : "Error",
+        description:
+          msg || "Failed to start interview. Please try again shortly.",
         variant: "destructive",
       });
     }
@@ -187,7 +192,7 @@ const ApplicationDetail = () => {
 
   if (!application || !job) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#101322] flex items-center justify-center text-gray-600 dark:text-gray-300">
+      <div className="min-h-screen bg-white dark:bg-[#0f172a] flex items-center justify-center text-gray-600 dark:text-gray-300">
         Loading...
       </div>
     );
@@ -196,11 +201,11 @@ const ApplicationDetail = () => {
   // 🟢 Step 1: Waiting / Status Page
   if (currentStep === "waiting") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 dark:from-[#101322] dark:via-[#1a1f36] dark:to-[#101322]">
+      <div className="min-h-screen bg-gradient-to-br from-blue-100 via-sky-50 to-blue-50 dark:from-[#0f172a] dark:via-[#1e293b] dark:to-[#0f172a]">
         <Navigation />
         <div className="max-w-3xl mx-auto py-12 px-6">
           {/* Job Info */}
-          <h1 className="text-3xl font-bold text-indigo-700 dark:text-indigo-400">
+          <h1 className="text-3xl font-bold text-blue-700 dark:text-blue-400">
             {job.title}
           </h1>
           <p className="mt-2 text-gray-600 dark:text-gray-300">
@@ -216,8 +221,8 @@ const ApplicationDetail = () => {
           )}
 
           {/* Status Section */}
-          <div className="mt-6 p-4 rounded-2xl bg-white dark:bg-[#181c2f] shadow-md">
-            <h2 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-3">
+          <div className="mt-6 p-4 rounded-2xl bg-white dark:bg-[#1e293b] shadow-md">
+            <h2 className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-3">
               Application Status
             </h2>
             {application.status === "applied" && (
@@ -247,7 +252,7 @@ const ApplicationDetail = () => {
                 </p>
                 <button
                   onClick={handleStartInterview}
-                  className="mt-4 px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:opacity-90 shadow-lg"
+                  className="mt-4 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-sky-600 text-white hover:opacity-90 shadow-lg"
                 >
                   Start Interview
                 </button>
@@ -257,15 +262,15 @@ const ApplicationDetail = () => {
 
           {/* Completed Rounds */}
           {application.history && application.history.length > 0 && (
-            <div className="mt-8 p-4 rounded-2xl bg-white dark:bg-[#181c2f] shadow-md">
-              <h2 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-3">
+            <div className="mt-8 p-4 rounded-2xl bg-white dark:bg-[#1e293b] shadow-md">
+              <h2 className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-3">
                 Completed Rounds
               </h2>
               <ul className="space-y-4">
                 {application.history.map((round: any, idx: number) => (
                   <li
                     key={idx}
-                    className="p-3 border rounded-lg bg-gray-50 dark:bg-[#23263A] dark:border-gray-700"
+                    className="p-3 border rounded-lg bg-gray-50 dark:bg-[#334155] dark:border-gray-700"
                   >
                     <p className="font-medium text-gray-800 dark:text-gray-200">
                       Round {round.roundNumber}:{" "}
@@ -306,8 +311,8 @@ const ApplicationDetail = () => {
           {application.status === "in-progress" &&
             job.rounds &&
             application.currentRound < job.rounds.length && (
-              <div className="mt-8 p-4 rounded-2xl bg-white dark:bg-[#181c2f] shadow-md">
-                <h2 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-3">
+              <div className="mt-8 p-4 rounded-2xl bg-white dark:bg-[#1e293b] shadow-md">
+                <h2 className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-3">
                   Upcoming Rounds
                 </h2>
                 <p className="text-gray-700 dark:text-gray-300">
@@ -321,8 +326,8 @@ const ApplicationDetail = () => {
         {/* ✅ Show round results in a modal */}
         {interviewResults && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white dark:bg-[#181c2f] rounded-xl p-6 w-full max-w-2xl shadow-lg">
-              <h3 className="text-lg font-semibold mb-4 text-indigo-600 dark:text-indigo-400">
+            <div className="bg-white dark:bg-[#1e293b] rounded-xl p-6 w-full max-w-2xl shadow-lg">
+              <h3 className="text-lg font-semibold mb-4 text-blue-600 dark:text-blue-400">
                 Round Results
               </h3>
               <PracticeResults
@@ -345,7 +350,7 @@ const ApplicationDetail = () => {
   // 🟢 Step 2: Interview
   if (currentStep === "interview") {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#101322]">
+      <div className="min-h-screen bg-white dark:bg-[#0f172a]">
         <PracticeInterview
           setupData={{
             role: job.title,
@@ -369,7 +374,7 @@ const ApplicationDetail = () => {
   // 🟢 Step 3: Results
   if (currentStep === "results") {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#101322]">
+      <div className="min-h-screen bg-white dark:bg-[#0f172a]">
         <Navigation />
         <PracticeResults interview={interviewResults} navigate={() => {}} />
       </div>

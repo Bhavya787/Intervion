@@ -9,6 +9,7 @@ import resumeRoutes from "./routes/resumeRoutes.js";
 import applicationRoutes from "./routes/applicationRoutes.js";
 import companyRoutes from "./routes/companyRoutes.js";
 import roomRoutes from "./routes/roomRoutes.js";
+import codingRoutes from "./routes/codingRoutes.js";
 import { createServer } from "http";
 import { setupSocket } from "./socket.js";
 
@@ -46,6 +47,7 @@ app.use("/api/resume", resumeRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/company", companyRoutes);
 app.use("/api/rooms", roomRoutes);
+app.use("/api/coding", codingRoutes);
 
 app.get("/", (req, res) => {
   res.send("🚀 API is running...");

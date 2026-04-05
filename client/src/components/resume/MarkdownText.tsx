@@ -9,12 +9,12 @@ const MarkdownText: React.FC<MarkdownTextProps> = ({ content }) => (
   <ReactMarkdown
     components={{
       h1: ({ children }) => (
-        <h1 className="text-2xl font-bold text-indigo-700 dark:text-indigo-300 mt-6 mb-4 border-b pb-1 border-gray-300 dark:border-gray-600">
+        <h1 className="text-2xl font-bold text-blue-700 dark:text-blue-300 mt-6 mb-4 border-b pb-1 border-gray-300 dark:border-gray-600">
           {children}
         </h1>
       ),
       h2: ({ children }) => (
-        <h2 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mt-5 mb-3">
+        <h2 className="text-xl font-semibold text-blue-600 dark:text-blue-400 mt-5 mb-3">
           {children}
         </h2>
       ),
@@ -38,7 +38,7 @@ const MarkdownText: React.FC<MarkdownTextProps> = ({ content }) => (
         <em className="italic text-gray-700 dark:text-gray-300">{children}</em>
       ),
       code: ({ children }) => (
-        <code className="bg-gray-100 dark:bg-gray-800 text-purple-600 dark:text-purple-300 px-1 py-0.5 rounded text-sm">
+        <code className="bg-gray-100 dark:bg-gray-800 text-sky-600 dark:text-sky-300 px-1 py-0.5 rounded text-sm">
           {children}
         </code>
       ),

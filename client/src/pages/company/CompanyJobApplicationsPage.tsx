@@ -41,7 +41,7 @@ const statusColors: Record<Application["status"], string> = {
     "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200",
   selected: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
   "final-selected":
-    "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
+    "bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-200",
   rejected: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
 };
 
@@ -187,7 +187,7 @@ const CompanyJobApplicationsPage: React.FC = () => {
                   apps.map((app) => (
                     <div
                       key={app._id}
-                      className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#23263A] hover:shadow-md transition cursor-pointer"
+                      className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#334155] hover:shadow-md transition cursor-pointer"
                       onClick={() =>
                         navigate(`/company/job/${job._id}/${app._id}`)
                       }

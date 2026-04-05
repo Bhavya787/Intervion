@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthPageLayout } from "@/components/auth/AuthPageLayout";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -122,51 +123,51 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
+    <AuthPageLayout>
       <div className="w-full max-w-2xl space-y-6">
         {/* Logo */}
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 shadow-lg mb-4">
-            <span className="text-white font-bold text-2xl">IV</span>
+          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-sky-600 shadow-lg shadow-blue-500/25 dark:shadow-blue-900/40">
+            <span className="text-2xl font-bold text-white">IV</span>
           </div>
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+          <h1 className="bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-3xl font-bold text-transparent dark:from-blue-400 dark:to-sky-400">
             Join Intervion
           </h1>
-          <p className="text-gray-500 dark:text-gray-400">
-            Create your account and start your journey
+          <p className="mt-1 text-sm text-stone-600 dark:text-stone-400">
+            One account — practice, apply, and grow
           </p>
         </div>
 
-        <Card className="shadow-xl border-0 bg-white dark:bg-gray-800 rounded-lg">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center text-gray-900 dark:text-white">
-              Create Account
+        <Card className="rounded-2xl border border-stone-200/80 bg-white/90 shadow-2xl shadow-stone-900/10 backdrop-blur-xl dark:border-stone-700/60 dark:bg-[#1e293b]/92 dark:shadow-black/40">
+          <CardHeader className="space-y-1 pb-2">
+            <CardTitle className="text-center text-2xl text-stone-900 dark:text-stone-50">
+              Create account
             </CardTitle>
-            <CardDescription className="text-center text-gray-500 dark:text-gray-400">
-              Choose your role to get personalized experience
+            <CardDescription className="text-center text-stone-600 dark:text-stone-400">
+              Pick a role — we&apos;ll tailor your dashboard
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Role Selection */}
             <div className="space-y-3">
-              <Label className="text-base font-medium text-gray-900 dark:text-white">
+              <Label className="text-base font-medium text-stone-900 dark:text-stone-50">
                 I am a:
               </Label>
               <div className="grid grid-cols-2 gap-3">
                 <Button
                   type="button"
                   variant={role === "student" ? "default" : "outline"}
-                  className={`h-20 flex-col space-y-2 ${
+                  className={`h-20 flex-col space-y-2 rounded-xl border-stone-200 dark:border-stone-600 ${
                     role === "student"
-                      ? "bg-indigo-500 dark:bg-indigo-700 text-white shadow-lg"
-                      : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                      ? "border-transparent bg-blue-500 text-white shadow-md shadow-blue-500/20 dark:bg-blue-600"
+                      : "bg-stone-100 text-stone-800 dark:bg-stone-800/80 dark:text-stone-100"
                   }`}
                   onClick={() => setRole("student")}
                 >
                   <User size={24} />
                   <div className="text-center">
                     <span className="block font-medium">Student</span>
-                    <span className="text-xs opacity-80">
+                    <span className="text-xs opacity-90">
                       Looking for opportunities
                     </span>
                   </div>
@@ -174,17 +175,17 @@ const Register = () => {
                 <Button
                   type="button"
                   variant={role === "company" ? "default" : "outline"}
-                  className={`h-20 flex-col space-y-2 ${
+                  className={`h-20 flex-col space-y-2 rounded-xl border-stone-200 dark:border-stone-600 ${
                     role === "company"
-                      ? "bg-purple-600 dark:bg-purple-700 text-white shadow-lg"
-                      : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                      ? "border-transparent bg-sky-600 text-white shadow-md shadow-sky-600/20 dark:bg-sky-600"
+                      : "bg-stone-100 text-stone-800 dark:bg-stone-800/80 dark:text-stone-100"
                   }`}
                   onClick={() => setRole("company")}
                 >
                   <Building size={24} />
                   <div className="text-center">
                     <span className="block font-medium">Company</span>
-                    <span className="text-xs opacity-80">Hiring talent</span>
+                    <span className="text-xs opacity-90">Hiring talent</span>
                   </div>
                 </Button>
               </div>
@@ -199,7 +200,7 @@ const Register = () => {
                 <div className="space-y-2">
                   <Label
                     htmlFor="name"
-                    className="text-gray-900 dark:text-white"
+                    className="text-stone-900 dark:text-stone-50"
                   >
                     {role === "company" ? "Company Name" : "Full Name"}
                   </Label>
@@ -213,7 +214,7 @@ const Register = () => {
                     }
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
-                    className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                    className="rounded-lg border-stone-200 bg-white/90 text-stone-900 placeholder:text-stone-400 focus-visible:ring-blue-500/30 dark:border-stone-600 dark:bg-stone-900/60 dark:text-stone-50 dark:placeholder:text-stone-500"
                     required
                   />
                 </div>
@@ -221,14 +222,14 @@ const Register = () => {
                 <div className="space-y-2">
                   <Label
                     htmlFor="email"
-                    className="text-gray-900 dark:text-white"
+                    className="text-stone-900 dark:text-stone-50"
                   >
                     Email Address
                   </Label>
                   <div className="relative">
                     <Mail
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500"
-                      size={16}
+                      className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-stone-400 dark:text-stone-500"
+                      aria-hidden
                     />
                     <Input
                       id="email"
@@ -238,7 +239,7 @@ const Register = () => {
                       onChange={(e) =>
                         handleInputChange("email", e.target.value)
                       }
-                      className="pl-10 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                      className="rounded-lg border-stone-200 bg-white/90 pl-10 text-stone-900 placeholder:text-stone-400 focus-visible:ring-blue-500/30 dark:border-stone-600 dark:bg-stone-900/60 dark:text-stone-50 dark:placeholder:text-stone-500"
                       required
                     />
                   </div>
@@ -249,14 +250,14 @@ const Register = () => {
                 <div className="space-y-2">
                   <Label
                     htmlFor="password"
-                    className="text-gray-900 dark:text-white"
+                    className="text-stone-900 dark:text-stone-50"
                   >
                     Password
                   </Label>
                   <div className="relative">
                     <Lock
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500"
-                      size={16}
+                      className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-stone-400 dark:text-stone-500"
+                      aria-hidden
                     />
                     <Input
                       id="password"
@@ -266,14 +267,14 @@ const Register = () => {
                       onChange={(e) =>
                         handleInputChange("password", e.target.value)
                       }
-                      className="pl-10 pr-10 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                      className="rounded-lg border-stone-200 bg-white/90 pl-10 pr-10 text-stone-900 placeholder:text-stone-400 focus-visible:ring-blue-500/30 dark:border-stone-600 dark:bg-stone-900/60 dark:text-stone-50 dark:placeholder:text-stone-500"
                       required
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 w-6 h-6 p-0 text-gray-400 dark:text-gray-500"
+                      className="absolute right-2 top-1/2 h-8 w-8 -translate-y-1/2 p-0 text-stone-400 hover:text-stone-600 dark:text-stone-500 dark:hover:text-stone-300"
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
@@ -284,14 +285,14 @@ const Register = () => {
                 <div className="space-y-2">
                   <Label
                     htmlFor="confirmPassword"
-                    className="text-gray-900 dark:text-white"
+                    className="text-stone-900 dark:text-stone-50"
                   >
                     Confirm Password
                   </Label>
                   <div className="relative">
                     <Lock
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500"
-                      size={16}
+                      className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-stone-400 dark:text-stone-500"
+                      aria-hidden
                     />
                     <Input
                       id="confirmPassword"
@@ -301,14 +302,14 @@ const Register = () => {
                       onChange={(e) =>
                         handleInputChange("confirmPassword", e.target.value)
                       }
-                      className="pl-10 pr-10 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                      className="rounded-lg border-stone-200 bg-white/90 pl-10 pr-10 text-stone-900 placeholder:text-stone-400 focus-visible:ring-blue-500/30 dark:border-stone-600 dark:bg-stone-900/60 dark:text-stone-50 dark:placeholder:text-stone-500"
                       required
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 w-6 h-6 p-0 text-gray-400 dark:text-gray-500"
+                      className="absolute right-2 top-1/2 h-8 w-8 -translate-y-1/2 p-0 text-stone-400 hover:text-stone-600 dark:text-stone-500 dark:hover:text-stone-300"
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
@@ -325,8 +326,8 @@ const Register = () => {
 
               {/* Role-specific fields */}
               {role === "student" && (
-                <div className="space-y-4 p-4 bg-indigo-50 dark:bg-indigo-900 rounded-lg border border-indigo-200 dark:border-indigo-700">
-                  <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-300 font-medium">
+                <div className="space-y-4 rounded-xl border border-blue-200/80 bg-blue-50/90 p-4 dark:border-blue-800/50 dark:bg-blue-950/35">
+                  <div className="flex items-center gap-2 font-medium text-blue-800 dark:text-blue-200">
                     <GraduationCap size={16} />
                     Student Information
                   </div>
@@ -334,7 +335,7 @@ const Register = () => {
                   <div className="space-y-2">
                     <Label
                       htmlFor="education"
-                      className="text-gray-900 dark:text-white"
+                      className="text-stone-900 dark:text-stone-50"
                     >
                       Education Background
                     </Label>
@@ -346,7 +347,7 @@ const Register = () => {
                       onChange={(e) =>
                         handleInputChange("education", e.target.value)
                       }
-                      className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                      className="rounded-lg border-stone-200 bg-white/90 text-stone-900 placeholder:text-stone-400 focus-visible:ring-blue-500/30 dark:border-stone-600 dark:bg-stone-900/60 dark:text-stone-50 dark:placeholder:text-stone-500"
                       required
                     />
                   </div>
@@ -354,7 +355,7 @@ const Register = () => {
                   <div className="space-y-2">
                     <Label
                       htmlFor="skills"
-                      className="text-gray-900 dark:text-white"
+                      className="text-stone-900 dark:text-stone-50"
                     >
                       Skills (Optional)
                     </Label>
@@ -366,15 +367,15 @@ const Register = () => {
                         handleInputChange("skills", e.target.value)
                       }
                       rows={3}
-                      className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                      className="rounded-lg border-stone-200 bg-white/90 text-stone-900 placeholder:text-stone-400 focus-visible:ring-blue-500/30 dark:border-stone-600 dark:bg-stone-900/60 dark:text-stone-50 dark:placeholder:text-stone-500"
                     />
                   </div>
                 </div>
               )}
 
               {role === "company" && (
-                <div className="space-y-4 p-4 bg-purple-50 dark:bg-purple-900 rounded-lg border border-purple-200 dark:border-purple-700">
-                  <div className="flex items-center gap-2 text-purple-700 dark:text-purple-300 font-medium">
+                <div className="space-y-4 rounded-xl border border-sky-200/80 bg-sky-50/90 p-4 dark:border-sky-800/50 dark:bg-sky-950/30">
+                  <div className="flex items-center gap-2 font-medium text-sky-900 dark:text-sky-200">
                     <Briefcase size={16} />
                     Company Information
                   </div>
@@ -383,7 +384,7 @@ const Register = () => {
                     <div className="space-y-2">
                       <Label
                         htmlFor="industry"
-                        className="text-gray-900 dark:text-white"
+                        className="text-stone-900 dark:text-stone-50"
                       >
                         Industry
                       </Label>
@@ -393,7 +394,7 @@ const Register = () => {
                         }
                         required
                       >
-                        <SelectTrigger className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
+                        <SelectTrigger className="rounded-lg border-stone-200 bg-white/90 text-stone-900 placeholder:text-stone-400 focus-visible:ring-blue-500/30 dark:border-stone-600 dark:bg-stone-900/60 dark:text-stone-50 dark:placeholder:text-stone-500">
                           <SelectValue placeholder="Select industry" />
                         </SelectTrigger>
                         <SelectContent>
@@ -413,7 +414,7 @@ const Register = () => {
                     <div className="space-y-2">
                       <Label
                         htmlFor="companySize"
-                        className="text-gray-900 dark:text-white"
+                        className="text-stone-900 dark:text-stone-50"
                       >
                         Company Size
                       </Label>
@@ -423,7 +424,7 @@ const Register = () => {
                         }
                         required
                       >
-                        <SelectTrigger className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
+                        <SelectTrigger className="rounded-lg border-stone-200 bg-white/90 text-stone-900 placeholder:text-stone-400 focus-visible:ring-blue-500/30 dark:border-stone-600 dark:bg-stone-900/60 dark:text-stone-50 dark:placeholder:text-stone-500">
                           <SelectValue placeholder="Select size" />
                         </SelectTrigger>
                         <SelectContent>
@@ -444,7 +445,7 @@ const Register = () => {
                   <div className="space-y-2">
                     <Label
                       htmlFor="roleOffered"
-                      className="text-gray-900 dark:text-white"
+                      className="text-stone-900 dark:text-stone-50"
                     >
                       Primary Role You're Hiring For
                     </Label>
@@ -456,7 +457,7 @@ const Register = () => {
                       onChange={(e) =>
                         handleInputChange("roleOffered", e.target.value)
                       }
-                      className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                      className="rounded-lg border-stone-200 bg-white/90 text-stone-900 placeholder:text-stone-400 focus-visible:ring-blue-500/30 dark:border-stone-600 dark:bg-stone-900/60 dark:text-stone-50 dark:placeholder:text-stone-500"
                       required
                     />
                   </div>
@@ -465,7 +466,7 @@ const Register = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-indigo-500 dark:bg-indigo-700 text-white hover:shadow-lg transition-all duration-300"
+                className="w-full rounded-xl bg-gradient-to-r from-blue-500 to-sky-600 text-white shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl disabled:opacity-60 dark:from-blue-600 dark:to-sky-700 dark:shadow-blue-900/30"
                 size="lg"
                 disabled={loading || !role}
               >
@@ -475,20 +476,20 @@ const Register = () => {
 
             {/* Login Link */}
             <div className="text-center">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-stone-600 dark:text-stone-400">
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="text-indigo-500 dark:text-indigo-400 hover:underline font-medium"
+                  className="font-medium text-blue-600 underline-offset-4 hover:text-blue-700 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
                 >
-                  Sign in here
+                  Sign in
                 </Link>
               </p>
             </div>
           </CardContent>
         </Card>
       </div>
-    </div>
+    </AuthPageLayout>
   );
 };
 

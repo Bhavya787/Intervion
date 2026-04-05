@@ -17,11 +17,15 @@ const roomSchema = new mongoose.Schema(
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     messages: [messageSchema],
-    maxMembers: { type: Number, default: 20 },
+    maxMembers: { type: Number, default: 5 },
     whiteboardSnapshot: { type: Object, default: null },
     codeSnapshot: {
       code: { type: String, default: "// Start coding together..." },
-      language: { type: String, default: "javascript" }
+      language: { type: String, default: "javascript" },
+      questions: { type: [Object], default: [] },
+      currentQuestionIndex: { type: Number, default: 0 },
+      questionTopic: { type: String, default: "" },
+      questionDifficulty: { type: String, default: "Medium" },
     },
     whiteboardLastSaved: { type: Date, default: null },
     codeLastSaved: { type: Date, default: null },

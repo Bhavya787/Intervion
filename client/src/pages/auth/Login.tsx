@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthPageLayout } from "@/components/auth/AuthPageLayout";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -99,44 +100,44 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 p-4">
+    <AuthPageLayout>
       <div className="w-full max-w-md space-y-6">
         {/* Logo */}
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 shadow-lg mb-4">
-            <span className="text-white font-bold text-2xl">IV</span>
+          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-sky-600 shadow-lg shadow-blue-500/25 dark:shadow-blue-900/40">
+            <span className="text-2xl font-bold text-white">IV</span>
           </div>
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+          <h1 className="bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-3xl font-bold text-transparent dark:from-blue-400 dark:to-sky-400">
             Intervion
           </h1>
-          <p className="text-gray-500 dark:text-gray-400">
-            Sign in to your account
+          <p className="mt-1 text-sm text-stone-600 dark:text-stone-400">
+            Sign in and pick up where you left off
           </p>
         </div>
 
-        <Card className="shadow-xl border-0 bg-white dark:bg-gray-800 ring ring-gray-900/5 rounded-lg">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center text-gray-900 dark:text-white">
+        <Card className="rounded-2xl border border-stone-200/80 bg-white/90 shadow-2xl shadow-stone-900/10 backdrop-blur-xl dark:border-stone-700/60 dark:bg-[#1e293b]/92 dark:shadow-black/40">
+          <CardHeader className="space-y-1 pb-2">
+            <CardTitle className="text-center text-2xl text-stone-900 dark:text-stone-50">
               Welcome back
             </CardTitle>
-            <CardDescription className="text-center text-gray-500 dark:text-gray-400">
-              Choose your role and enter your credentials
+            <CardDescription className="text-center text-stone-600 dark:text-stone-400">
+              Choose your role, then sign in
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Role Selection */}
             <div className="space-y-3">
-              <Label className="text-base font-medium text-gray-900 dark:text-white">
+              <Label className="text-base font-medium text-stone-900 dark:text-stone-50">
                 I am a:
               </Label>
               <div className="grid grid-cols-2 gap-3">
                 <Button
                   type="button"
                   variant={role === "student" ? "default" : "outline"}
-                  className={`h-16 flex-col space-y-2 ${
+                  className={`h-16 flex-col space-y-2 rounded-xl border-stone-200 dark:border-stone-600 ${
                     role === "student"
-                      ? "bg-indigo-500 dark:bg-indigo-700 text-white shadow-lg"
-                      : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                      ? "border-transparent bg-blue-500 text-white shadow-md shadow-blue-500/20 dark:bg-blue-600"
+                      : "bg-stone-100 text-stone-800 dark:bg-stone-800/80 dark:text-stone-100"
                   }`}
                   onClick={() => setRole("student")}
                 >
@@ -146,10 +147,10 @@ const Login = () => {
                 <Button
                   type="button"
                   variant={role === "company" ? "default" : "outline"}
-                  className={`h-16 flex-col space-y-2 ${
+                  className={`h-16 flex-col space-y-2 rounded-xl border-stone-200 dark:border-stone-600 ${
                     role === "company"
-                      ? "bg-purple-600 dark:bg-purple-700 text-white shadow-lg"
-                      : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                      ? "border-transparent bg-sky-600 text-white shadow-md shadow-sky-600/20 dark:bg-sky-600"
+                      : "bg-stone-100 text-stone-800 dark:bg-stone-800/80 dark:text-stone-100"
                   }`}
                   onClick={() => setRole("company")}
                 >
@@ -166,22 +167,22 @@ const Login = () => {
               <div className="space-y-2">
                 <Label
                   htmlFor="email"
-                  className="text-gray-900 dark:text-white"
+                  className="text-stone-900 dark:text-stone-50"
                 >
                   Email
                 </Label>
                 <div className="relative">
                   <Mail
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500"
-                    size={16}
+                    className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-stone-400 dark:text-stone-500"
+                    aria-hidden
                   />
                   <Input
                     id="email"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="you@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                    className="border-stone-200 bg-white/90 pl-10 text-stone-900 placeholder:text-stone-400 focus-visible:ring-blue-500/30 dark:border-stone-600 dark:bg-stone-900/60 dark:text-stone-50 dark:placeholder:text-stone-500"
                     required
                   />
                 </div>
@@ -190,29 +191,29 @@ const Login = () => {
               <div className="space-y-2">
                 <Label
                   htmlFor="password"
-                  className="text-gray-900 dark:text-white"
+                  className="text-stone-900 dark:text-stone-50"
                 >
                   Password
                 </Label>
                 <div className="relative">
                   <Lock
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500"
-                    size={16}
+                    className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-stone-400 dark:text-stone-500"
+                    aria-hidden
                   />
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
+                    placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 pr-10 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                    className="border-stone-200 bg-white/90 pl-10 pr-10 text-stone-900 placeholder:text-stone-400 focus-visible:ring-blue-500/30 dark:border-stone-600 dark:bg-stone-900/60 dark:text-stone-50 dark:placeholder:text-stone-500"
                     required
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 w-6 h-6 p-0 text-gray-400 dark:text-gray-500"
+                    className="absolute right-2 top-1/2 h-8 w-8 -translate-y-1/2 p-0 text-stone-400 hover:text-stone-600 dark:text-stone-500 dark:hover:text-stone-300"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
@@ -222,7 +223,7 @@ const Login = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-indigo-500 dark:bg-indigo-700 text-white hover:shadow-lg transition-all duration-300"
+                className="w-full rounded-xl bg-gradient-to-r from-blue-500 to-sky-600 text-white shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl dark:from-blue-600 dark:to-sky-700 dark:shadow-blue-900/30"
                 size="lg"
                 disabled={loading}
               >
@@ -237,7 +238,7 @@ const Login = () => {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700"
+                className="w-full rounded-xl border-stone-200 bg-stone-50/90 text-stone-800 hover:bg-stone-100 dark:border-stone-600 dark:bg-stone-800/60 dark:text-stone-100 dark:hover:bg-stone-800"
                 onClick={() => handleOAuthLogin("google")}
                 disabled={!role}
               >
@@ -265,7 +266,7 @@ const Login = () => {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700"
+                className="w-full rounded-xl border-stone-200 bg-stone-50/90 text-stone-800 hover:bg-stone-100 dark:border-stone-600 dark:bg-stone-800/60 dark:text-stone-100 dark:hover:bg-stone-800"
                 onClick={() => handleOAuthLogin("linkedin")}
                 disabled={!role}
               >
@@ -282,20 +283,20 @@ const Login = () => {
 
             {/* Register Link */}
             <div className="text-center">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Don't have an account?{" "}
+              <p className="text-sm text-stone-600 dark:text-stone-400">
+                Don&apos;t have an account?{" "}
                 <Link
                   to="/register"
-                  className="text-indigo-500 dark:text-indigo-400 hover:underline font-medium"
+                  className="font-medium text-blue-600 underline-offset-4 hover:text-blue-700 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
                 >
-                  Sign up here
+                  Create one
                 </Link>
               </p>
             </div>
           </CardContent>
         </Card>
       </div>
-    </div>
+    </AuthPageLayout>
   );
 };
 

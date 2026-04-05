@@ -87,15 +87,15 @@ const Navigation = () => {
   const isActivePath = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-white dark:bg-[#181A2A] border-b border-gray-200 dark:border-gray-700 shadow">
+    <nav className="bg-white dark:bg-[#1e293b] border-b border-gray-200 dark:border-gray-700 shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-sky-600 rounded-lg flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-sm">IV</span>
             </div>
-            <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+            <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-600 dark:from-blue-400 dark:to-sky-400">
               Intervion
             </span>
           </Link>
@@ -110,8 +110,8 @@ const Navigation = () => {
                   to={item.path}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                     isActivePath(item.path)
-                      ? "bg-indigo-500 dark:bg-indigo-700 text-white shadow"
-                      : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-[#23263A]"
+                      ? "bg-blue-500 dark:bg-blue-700 text-white shadow"
+                      : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-[#334155]"
                   }`}
                 >
                   <Icon size={16} />
@@ -160,7 +160,7 @@ const Navigation = () => {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden bg-white dark:bg-[#181A2A] border-t border-gray-200 dark:border-gray-700">
+        <div className="md:hidden bg-white dark:bg-[#1e293b] border-t border-gray-200 dark:border-gray-700">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -170,8 +170,8 @@ const Navigation = () => {
                   to={item.path}
                   className={`flex items-center space-x-3 px-3 py-2 rounded-lg text-base font-medium transition-all duration-200 ${
                     isActivePath(item.path)
-                      ? "bg-indigo-500 dark:bg-indigo-700 text-white"
-                      : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-[#23263A]"
+                      ? "bg-blue-500 dark:bg-blue-700 text-white"
+                      : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-[#334155]"
                   }`}
                   onClick={() => setIsOpen(false)}
                 >

@@ -139,7 +139,7 @@ const ApplicationDetailPage: React.FC = () => {
                 {application.history?.map((h, idx) => (
                   <div
                     key={idx}
-                    className="p-3 border rounded-lg bg-gray-50 dark:bg-[#23263A]"
+                    className="p-3 border rounded-lg bg-gray-50 dark:bg-[#334155]"
                   >
                     <div className="flex justify-between">
                       <span className="font-semibold">

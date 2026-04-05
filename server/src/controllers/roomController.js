@@ -1,6 +1,7 @@
 import Room from "../models/Room.js";
 import User from "../models/User.js";
-import { generateGeminiResponse } from "../utils/gemini.js";
+import { generateAIResponse } from "../utils/ai.js";
+import { createMCQFallback } from "../utils/aiFallbacks.js";
 
 export const generateMCQ = async (req, res) => {
   try {
@@ -15,16 +16,28 @@ export const generateMCQ = async (req, res) => {
     
     Ensure the JSON is valid and contains no other text.`;
 
-    const response = await generateGeminiResponse(prompt);
+    const response = await generateAIResponse(prompt);
     
     // Clean the response in case Gemini adds markdown code blocks
     const cleanedResponse = response.replace(/```json|```/g, "").trim();
-    const mcqs = JSON.parse(cleanedResponse);
+    let mcqs;
+    try {
+      mcqs = JSON.parse(cleanedResponse);
+    } catch (parseError) {
+      console.error("JSON Parse Error on MCQ generation:", cleanedResponse);
+      // Fallback: try to find the array in the string if Gemini added text around it
+      const jsonMatch = cleanedResponse.match(/\[.*\]/s);
+      if (jsonMatch) {
+        mcqs = JSON.parse(jsonMatch[0]);
+      } else {
+        throw new Error("Could not parse MCQ JSON response");
+      }
+    }
     
     res.json(mcqs);
   } catch (err) {
     console.error("MCQ Generation error:", err);
-    res.status(500).json({ error: "Failed to generate MCQ questions" });
+    res.json(createMCQFallback({ topic, difficulty, count: count || 5 }));
   }
 };
 
@@ -33,13 +46,19 @@ export const createRoom = async (req, res) => {
     const { name, description, topic, maxMembers } = req.body;
     const userId = req.user.id;
 
+    // Check for duplicate room name
+    const existingRoom = await Room.findOne({ name: { $regex: new RegExp(`^${name}$`, "i") } });
+    if (existingRoom) {
+      return res.status(400).json({ error: "A room with this name already exists. Please choose a unique name." });
+    }
+
     const room = new Room({
       name,
       description: description || "",
       topic,
       createdBy: userId,
       members: [userId],
-      maxMembers: maxMembers || 20,
+      maxMembers: 5, // Set max room capacity to 5
     });
     await room.save();
     const populated = await Room.findById(room._id)

@@ -152,7 +152,7 @@ const JobDetailPage: React.FC = () => {
                 {(job.rounds || []).map((r: Round, idx: number) => (
                   <div
                     key={idx}
-                    className="p-4 border rounded-lg bg-gray-50 dark:bg-[#23263A] border-gray-200 dark:border-gray-700"
+                    className="p-4 border rounded-lg bg-gray-50 dark:bg-[#334155] border-gray-200 dark:border-gray-700"
                   >
                     <div className="flex justify-between">
                       <div>

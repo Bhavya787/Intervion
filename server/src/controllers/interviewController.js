@@ -1,7 +1,13 @@
-import { generateGeminiResponse } from "../utils/gemini.js";
+import { generateAIResponse } from "../utils/ai.js";
 import Interview from "../models/Interview.js";
 import User from "../models/User.js";
 import JobOpening from "../models/JobOpening.js";
+import {
+  createInterviewConclusionFallback,
+  createInterviewResponseFallback,
+  createInterviewStartFallback,
+  createResumeFormatFallback,
+} from "../utils/aiFallbacks.js";
 
 export const startInterview = async (req, res) => {
   const { role, resume, roundType, topic, difficulty } = req.body;
@@ -26,11 +32,19 @@ Begin the interview naturally and professionally — like a real human interview
 `;
 
   try {
-    const response = await generateGeminiResponse(prompt);
+    const response = await generateAIResponse(prompt);
     res.json({ message: response.trim() });
   } catch (error) {
     console.error("startInterview error:", error.message);
-    res.status(500).json({ error: "Gemini failed to respond." });
+    res.json({
+      message: createInterviewStartFallback({
+        role,
+        roundType,
+        topic,
+        difficulty,
+      }),
+      fallback: true,
+    });
   }
 };
 
@@ -40,9 +54,17 @@ export const respondToInterview = async (req, res) => {
 
   const historyFormatted = chatHistory
     .slice(-10)
-    .map(
-      (entry, i) => `Q${i + 1}: ${entry.question}\nA${i + 1}: ${entry.answer}`
-    )
+    .map((entry, i) => {
+      if (entry.question || entry.answer) {
+        return `Q${i + 1}: ${entry.question || ""}\nA${i + 1}: ${
+          entry.answer || ""
+        }`;
+      }
+
+      return `${entry.type === "question" ? "Q" : "A"}${i + 1}: ${
+        entry.content || ""
+      }`;
+    })
     .join("\n\n");
 
   const prompt = `
@@ -80,11 +102,19 @@ Now continue the conversation — briefly reflect on the user's answer if approp
 `;
 
   try {
-    const responseText = await generateGeminiResponse(prompt);
+    const responseText = await generateAIResponse(prompt);
     res.json({ message: responseText.trim() });
   } catch (error) {
     console.error("respondToInterview error:", error.message);
-    res.status(500).json({ error: "Failed to get Gemini response." });
+    res.json({
+      message: createInterviewResponseFallback({
+        answer,
+        role,
+        topic,
+        roundType,
+      }),
+      fallback: true,
+    });
   }
 };
 
@@ -110,11 +140,11 @@ ${resumeText}
 `;
 
   try {
-    const formatted = await generateGeminiResponse(prompt);
+    const formatted = await generateAIResponse(prompt);
     res.json({ formatted });
   } catch (error) {
     console.error("Error formatting resume:", error.message);
-    res.status(500).json({ error: "Failed to format resume" });
+    res.json({ formatted: createResumeFormatFallback(resumeText), fallback: true });
   }
 };
 
@@ -183,8 +213,17 @@ ${resumeText}
 Give clear and concise feedback for this part of the interview only.
     `;
 
-    const feedback = await generateGeminiResponse(prompt);
-    feedbacks.push(feedback.trim());
+    try {
+      const feedback = await generateAIResponse(prompt);
+      feedbacks.push(feedback.trim());
+    } catch (error) {
+      console.error("Chunk feedback fallback:", error.message);
+      feedbacks.push(
+        `Fallback feedback: the candidate gave a response for part ${
+          i + 1
+        }, but AI evaluation was unavailable.`
+      );
+    }
   }
 
   // ✅ Generate final evaluation
@@ -208,7 +247,16 @@ Result: Failure
 Do NOT add any explanation after Result line.
 `;
 
-  const finalFeedback = await generateGeminiResponse(finalPrompt);
+  let finalFeedback;
+  try {
+    finalFeedback = await generateAIResponse(finalPrompt);
+  } catch (error) {
+    console.error("Final interview evaluation fallback:", error.message);
+    finalFeedback = createInterviewConclusionFallback({
+      history,
+      roleSummary,
+    });
+  }
 
   const resultLine = finalFeedback
     .split("\n")

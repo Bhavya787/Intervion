@@ -61,7 +61,7 @@ const FormattedResumeModal: React.FC<FormattedResumeModalProps> = ({
         {/* Body */}
         <div className="px-8 py-6 leading-relaxed text-gray-800 dark:text-gray-200">
           {loading ? (
-            <p className="text-indigo-500 animate-pulse">
+            <p className="text-blue-500 animate-pulse">
               ⏳ Formatting resume...
             </p>
           ) : (

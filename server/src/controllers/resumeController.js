@@ -1,5 +1,6 @@
 import User from "../models/User.js";
-import { generateGeminiResponse } from "../utils/gemini.js";
+import { generateAIResponse } from "../utils/ai.js";
+import { createResumeFormatFallback } from "../utils/aiFallbacks.js";
 
 export const updateResumeText = async (req, res) => {
   try {
@@ -46,10 +47,10 @@ ${resumeText}
 `;
 
   try {
-    const formatted = await generateGeminiResponse(prompt);
+    const formatted = await generateAIResponse(prompt);
     res.json({ formatted });
   } catch (error) {
     console.error("Error formatting resume:", error.message);
-    res.status(500).json({ error: "Failed to format resume" });
+    res.json({ formatted: createResumeFormatFallback(resumeText), fallback: true });
   }
 };

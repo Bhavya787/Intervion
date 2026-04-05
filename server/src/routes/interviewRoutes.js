@@ -9,8 +9,9 @@ import {
   rescheduleInterview,
   scheduleInterview,
 } from "../controllers/interviewController.js";
-import { generateGeminiResponse } from "../utils/gemini.js";
+import { generateAIResponse } from "../utils/ai.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
+import { createRoleSummaryFallback } from "../utils/aiFallbacks.js";
 
 const router = express.Router();
 
@@ -20,10 +21,10 @@ router.post("/summarize-role", async (req, res) => {
   const { prompt } = req.body;
 
   try {
-    const summary = await generateGeminiResponse(prompt);
+    const summary = await generateAIResponse(prompt);
     res.json({ summary });
   } catch (err) {
-    res.status(500).json({ error: "Failed to summarize role" });
+    res.json({ summary: createRoleSummaryFallback(prompt), fallback: true });
   }
 });
 router.post("/format-resume", formatResume);

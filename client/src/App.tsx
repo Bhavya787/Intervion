@@ -26,6 +26,7 @@ import StudentApplicationDetailPage from "./pages/student/StudentApplicationDeta
 import StudyRoomsPage from "./pages/student/StudyRoomsPage";
 import RoomDetailPage from "./pages/student/RoomDetailPage";
 import MCQPractice from "./pages/student/MCQPractice";
+import CodingPractice from "./pages/student/CodingPractice";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 // inside <Routes>
@@ -33,7 +34,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <div className="min-h-screen dark:bg-[#0f172a] dark:text-gray-100">
+  <div className="min-h-screen dark:bg-[#0f172a] dark:text-stone-100">
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="interviewpro-ui-theme">
         <TooltipProvider>
@@ -113,6 +114,14 @@ const App = () => (
                 element={
                   <ProtectedRoute allowedRoles={["student"]}>
                     <MCQPractice />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/student/coding"
+                element={
+                  <ProtectedRoute allowedRoles={["student"]}>
+                    <CodingPractice />
                   </ProtectedRoute>
                 }
               />

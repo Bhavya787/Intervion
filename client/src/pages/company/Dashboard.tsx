@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 
-const COLORS = ["#6366F1", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6"];
+const COLORS = ["#2563EB", "#10B981", "#0EA5E9", "#EF4444", "#6366F1"];
 
 const CompanyDashboard = () => {
   const [stats, setStats] = useState<any>(null);
@@ -114,14 +114,14 @@ const CompanyDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F1A] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+      <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F1A]">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a]">
       <Navigation />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -129,7 +129,7 @@ const CompanyDashboard = () => {
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-              🏢 {companyName} <span className="text-indigo-600 dark:text-indigo-400">Dashboard</span>
+              🏢 {companyName} <span className="text-blue-600 dark:text-blue-400">Dashboard</span>
             </h1>
             <p className="text-slate-500 dark:text-slate-400 mt-1">
               Manage your recruitment pipeline and track candidate progress.
@@ -137,7 +137,7 @@ const CompanyDashboard = () => {
           </div>
           <div className="flex items-center gap-3">
             <Link to="/company/job/new">
-              <Button className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/20 gap-2">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20 gap-2">
                 <Plus className="h-4 w-4" />
                 Post New Job
               </Button>
@@ -150,35 +150,35 @@ const CompanyDashboard = () => {
 
         {/* 📊 Hiring Overview Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-          <Card className="border-none shadow-sm bg-white dark:bg-[#161B2C] overflow-hidden relative group">
+          <Card className="border-none shadow-sm bg-white dark:bg-[#1e293b] overflow-hidden relative group">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Open Roles</p>
                   <p className="text-3xl font-bold mt-1 dark:text-white">{stats?.totalJobs || 0}</p>
                 </div>
-                <div className="h-12 w-12 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                <div className="h-12 w-12 rounded-2xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400">
                   <Briefcase size={24} />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-sm bg-white dark:bg-[#161B2C] overflow-hidden relative group">
+          <Card className="border-none shadow-sm bg-white dark:bg-[#1e293b] overflow-hidden relative group">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Candidates</p>
                   <p className="text-3xl font-bold mt-1 dark:text-white">{stats?.totalApplications || 0}</p>
                 </div>
-                <div className="h-12 w-12 rounded-2xl bg-purple-50 dark:bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                <div className="h-12 w-12 rounded-2xl bg-sky-50 dark:bg-sky-500/10 flex items-center justify-center text-sky-600 dark:text-sky-400">
                   <Users size={24} />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-sm bg-white dark:bg-[#161B2C] overflow-hidden relative group">
+          <Card className="border-none shadow-sm bg-white dark:bg-[#1e293b] overflow-hidden relative group">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -194,7 +194,7 @@ const CompanyDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-none shadow-sm bg-white dark:bg-[#161B2C] overflow-hidden relative group">
+          <Card className="border-none shadow-sm bg-white dark:bg-[#1e293b] overflow-hidden relative group">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -216,22 +216,22 @@ const CompanyDashboard = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold flex items-center gap-2 dark:text-white">
-                <Clock className="h-5 w-5 text-indigo-600" />
+                <Clock className="h-5 w-5 text-blue-600" />
                 Today's Interviews
               </h2>
-              <Button variant="ghost" size="sm" className="text-indigo-600 text-xs font-semibold">
+              <Button variant="ghost" size="sm" className="text-blue-600 text-xs font-semibold">
                 Full Schedule
               </Button>
             </div>
             
             <div className="space-y-4">
               {upcomingInterviews.length > 0 ? upcomingInterviews.map((interview) => (
-                <Card key={interview._id} className="border-none shadow-sm bg-white dark:bg-[#161B2C]">
+                <Card key={interview._id} className="border-none shadow-sm bg-white dark:bg-[#1e293b]">
                   <CardContent className="p-5">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                       <div className="flex items-center gap-6">
                         <div className="text-center min-w-[80px]">
-                          <p className="text-lg font-extrabold text-indigo-600 dark:text-indigo-400">
+                          <p className="text-lg font-extrabold text-blue-600 dark:text-blue-400">
                             {new Date(interview.scheduledAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </p>
                           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
@@ -249,7 +249,7 @@ const CompanyDashboard = () => {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 h-8 px-4 text-xs font-bold shadow-md shadow-indigo-500/10">
+                        <Button size="sm" className="bg-blue-600 hover:bg-blue-700 h-8 px-4 text-xs font-bold shadow-md shadow-blue-500/10">
                           Start Interview
                         </Button>
                         <Button 
@@ -269,7 +269,7 @@ const CompanyDashboard = () => {
                   </CardContent>
                 </Card>
               )) : (
-                <div className="text-center py-10 bg-white dark:bg-[#161B2C] rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
+                <div className="text-center py-10 bg-white dark:bg-[#1e293b] rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
                   <Calendar className="h-8 w-8 text-slate-300 mx-auto mb-2" />
                   <p className="text-sm text-slate-500 italic">No interviews scheduled for today</p>
                 </div>
@@ -279,10 +279,10 @@ const CompanyDashboard = () => {
             {/* ⚡ Pipeline Summary */}
             <div className="mt-10">
               <h2 className="text-xl font-bold mb-4 dark:text-white flex items-center gap-2">
-                <PieChartIcon className="h-5 w-5 text-indigo-600" />
+                <PieChartIcon className="h-5 w-5 text-blue-600" />
                 Pipeline Summary
               </h2>
-              <div className="bg-white dark:bg-[#161B2C] p-6 rounded-2xl shadow-sm border-none">
+              <div className="bg-white dark:bg-[#1e293b] p-6 rounded-2xl shadow-sm border-none">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div className="flex flex-col">
                     <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Applied</span>
@@ -300,7 +300,7 @@ const CompanyDashboard = () => {
                   </div>
                   <div className="h-8 w-[1px] bg-slate-100 dark:bg-slate-800 hidden sm:block"></div>
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Rejected</span>
+                    <span className="text-xs font-bold text-rose-600 uppercase tracking-wider">Rejected</span>
                     <span className="text-2xl font-bold dark:text-white">{stats?.rejected || 0}</span>
                   </div>
                 </div>
@@ -312,11 +312,11 @@ const CompanyDashboard = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold dark:text-white">📋 Recent Applications</h2>
-              <Button variant="link" size="sm" className="text-indigo-600 p-0 h-auto font-semibold">
+              <Button variant="link" size="sm" className="text-blue-600 p-0 h-auto font-semibold">
                 See all
               </Button>
             </div>
-            <Card className="border-none shadow-sm bg-white dark:bg-[#161B2C]">
+            <Card className="border-none shadow-sm bg-white dark:bg-[#1e293b]">
               <CardContent className="p-0">
                 <div className="divide-y divide-slate-100 dark:divide-slate-800">
                   {recentApps.slice(0, 5).map((app) => (
@@ -356,8 +356,8 @@ const CompanyDashboard = () => {
               <h2 className="text-xl font-bold mb-4 dark:text-white">🔔 Recent Alerts</h2>
               <div className="space-y-3">
                 {recentApps.length > 0 ? (
-                  <div className="p-3 rounded-xl bg-indigo-50/50 dark:bg-indigo-500/5 border border-indigo-100 dark:border-indigo-500/10">
-                    <p className="text-xs text-indigo-600 dark:text-indigo-400 font-bold mb-1 uppercase tracking-tighter">System</p>
+                  <div className="p-3 rounded-xl bg-blue-50/50 dark:bg-blue-500/5 border border-blue-100 dark:border-blue-500/10">
+                    <p className="text-xs text-blue-600 dark:text-blue-400 font-bold mb-1 uppercase tracking-tighter">System</p>
                     <p className="text-sm text-slate-700 dark:text-slate-300">
                       You have <span className="font-bold">{recentApps.length}</span> recent applications to review.
                     </p>
@@ -375,7 +375,7 @@ const CompanyDashboard = () => {
       </div>
 
       <Dialog open={rescheduleDialogOpen} onOpenChange={setRescheduleDialogOpen}>
-        <DialogContent className="sm:max-w-[425px] bg-white dark:bg-[#161B2C] border-slate-200 dark:border-slate-800">
+        <DialogContent className="sm:max-w-[425px] bg-white dark:bg-[#1e293b] border-slate-200 dark:border-slate-800">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold dark:text-white">Reschedule Interview</DialogTitle>
           </DialogHeader>
@@ -387,7 +387,7 @@ const CompanyDashboard = () => {
               <input
                 id="new-date"
                 type="datetime-local"
-                className="w-full p-2 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full p-2 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                 value={newScheduleDate}
                 onChange={(e) => setNewScheduleDate(e.target.value)}
               />
@@ -404,7 +404,7 @@ const CompanyDashboard = () => {
             <Button 
               onClick={handleReschedule} 
               disabled={rescheduling || !newScheduleDate}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
             >
               {rescheduling ? "Rescheduling..." : "Confirm Reschedule"}
             </Button>

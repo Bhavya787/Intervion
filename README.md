@@ -190,16 +190,6 @@ When running locally:
 - keep the client pointed at your local backend
 - open the same room in two browser tabs or two accounts to test live sync
 
-## Notes
-
-- The repository currently has no root-level automated test script.
-- The client has build and lint scripts; the server currently exposes development and seed scripts.
-- MongoDB connection setup forces public DNS servers in `server/src/config/db.js` to avoid local DNS or proxy resolution issues.
-
-## Documentation
-
-- [Comparison study](./docs/comparison-study.md)
-
 ## Summary
 
 Intervion is a full-stack platform for AI-assisted interview preparation, collaborative learning, and structured hiring workflows. The repository contains both the student preparation experience and the company recruitment flow in a single project.
